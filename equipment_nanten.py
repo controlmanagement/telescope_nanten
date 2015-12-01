@@ -11,6 +11,7 @@
 [History]
 
 2015/10/20 maruyama
+2015/12/01 iwamura
 
 ------------------------------------------------
 """
@@ -108,43 +109,28 @@ class antenna(object):
 		return
 	
 	def move_radec(self, gx, gy, gpx, gpy, code_mode, temp, pressure, humid, lamda, dcos, hosei = 'hosei_230.txt', off_x = 0, off_y = 0):
-		
-		
-		self.antenna.move_radec(gx, gy, gpx, gpy, code_mode, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
-		
-		
-		
-		
-		
-		
+		self.antenna.thread_start('EQUATRIAL', 0, gx, gy, gpx, gpy, code_mode, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
+		return
 	
 	def move_lb(self, gx, gy, temp, pressure, humid, lamda, dcos, hosei = 'hosei_230.txt', off_x = 0, off_y = 0):
-		
-		
-		self.antenna.move_lb(gx, gy, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
-		
-		
-		
-		
-		
-		
+		self.antenna.thread_start('GALACTIC', 0, gx, gy, 0, 0, 0, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
+		return
 	
-	def move_planet(self, ):
-		
-		
-		
-		
-		
-		
+	def move_planet(self, ntarg, code_mode, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y):
+		self.antenna.thread_start('PLANET', ntarg, 0, 0, 0, 0, 0, temp, pressure, humid, dcos, hosei, off_x, off_y)
+		return
 	
-	def do_otf():
-		
-		self.antenna.calc_otf()
-		
-		
-		
-		
-		
+	def move_stop(self):
+		self.antenna.tracking_end()
+		return
+	
+	def otf_start(self, x, y, dcos, coord_sys, dx, dy, dt, n, rampt, delay, lamda, temp = 0, pressure = 0, humid = 0, hosei = 'hosei_230.txt', code_mode = 'J2000'):
+		self.antenna.otf_start(x, y, dcos, coord_sys, dx, dy, dt, n, rampt, delay, lamda, temp, pressure, humid, hosei, code_mode)
+		return
+	
+	def otf_stop(self):
+		self.antenna.otf_stop()
+		return
 
 class dome(object):
 	
