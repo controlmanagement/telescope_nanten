@@ -5,189 +5,149 @@
 ------------------------------------------------
 [Detail Description]
 
-	
+    
 
 ------------------------------------------------
 [History]
 
-2015/10/20 maruyama
-2015/12/01 iwamura
+2015/12/16 maruyama
 
 ------------------------------------------------
 """
 
 import telescope_nanten.abs
 import telescope_nanten.m4
+#import telescope_nanten.ac240
 import telescope_nanten.antenna_nanten_controller
-import telescope_nanten.dome
-import telescope_nanten.membrane
-# import telescope_nanten.ac240
-# import pymeasure.ondotori
-# import pymeasure.lakeshore
-# import pymeasure.signal_generator
-import pymeasure.weather
-# import pymeasure.gps
-# import core.file_manager
-# import telescope_nanten.ccd
-# import pymeasure.power_meter
+#import pymeasure.weather
 
 # ---------- #
 
-#------------------
+class antenna(object):
+    
+    def __init__(self):
+        host = '172.20.0.11'
+        port = 8003
+        self.antenna = telescope_nanten.antenna_nanten_controller.antenna_client(host, port)
+        pass
+    """
+    def drive_on(self):
+    """
+
 
 class hot_load(object):
-	
-	def __init__(self):
-		host = '192.168.100.187'
-		port = 5921
-		self.abs = telescope_nanten.abs.abs_client('192.168.100.187',5921)
-		self.abs.open()
-		pass
-	
-	def move_r(self):
-		self.abs.start_thread('IN')
-		return
-	
-	def move_sky(self):
-		self.abs.start_thread('OUT')
-		return
-	
-	def get_status(self):
-		return self.abs.read_pos()
-	
-	# def insert_status(self):
-		# fm = file_manager.file_manager()
-		# fm.db_insert()
+    
+    def __init__(self):
+        host = '172.20.0.12'
+        port = 6001
+        self.l = telescope_nanten.abs.abs_client(host, port)
+        pass
+    
+    def move_r(self):
+        self.l.move_r()
+        return
+    
+    def move_sky(self):
+        self.l.move_sky()
+        return
+
+    def stop(self):
+        self.l.stop()
+        return
+
+    def get_status(self):
+        ret = self.l.get_pos()
+        return ret
+
+    # def insert_status(self):
+        # fm = file_manager.file_manager()
+        # fm.db_insert()
 
 class m4(object):
-	
-	def __init__(self):
-		host = '192.168.100.187'
-		port = 5923
-		self.m4 = telescope_nanten.m4.m4_client('192.168.100.187',5923)
-		self.m4.open()
-		pass
-	
-	def m4_in(self):
-		self.m4.start_thread('NAGOYA')
-		return
+    
+    def __init__(self):
+        host = '172.20.0.12'
+        port = 6003
+        self.m4 = telescope_nanten.m4.m4_client(host, port)
+        pass
+    
+    def m4_in(self):
+        self.m4.m4_in()
+        return
 
-	def m4_out(self):
-		self.m4.start_thread('SMART')
-		return
-	
-	def get_status(self):
-		ret = self.m4.read_pos()
-		return ret
+    def m4_out(self):
+        self.m4.m4_out()
+        return
 
-	# def insert_status(self):
-		# fm = file_manager.file_manager()
-		# fm.db_insert()
+    def stop(self):
+        self.m4.stop()
+        return
 
-class weather(object):
-	
-	def __init__(self):
-		# host = '192.168.100.187'
-		# port = 5925
-		self.weather = pymeasure.weather.weather_controller()
-		pass
-	
-	def get_weather(self):
-		ret = self.weather.get_weather()
-		return ret
+    def get_status(self):
+        ret = self.m4.get_pos()
+        return ret
 
-class antenna(object):
-	
-	def __init__(self):
-		host = ''
-		port = 
-		self.antenna = telescope.antenna_nanten_controller.antenna_client('',)
-		pass
-	
-	def move_azel(self, az, el, dcos, hosei = 'hosei_230.txt', off_az = 0, off_el = 0):
-		self.antenna.move_azel(az, el, dcos, hosei, off_az, off_el)
-		return
-	
-	def move_radec(self, gx, gy, gpx, gpy, code_mode, temp, pressure, humid, lamda, dcos, hosei = 'hosei_230.txt', off_x = 0, off_y = 0):
-		self.antenna.thread_start('EQUATRIAL', 0, gx, gy, gpx, gpy, code_mode, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
-		return
-	
-	def move_lb(self, gx, gy, temp, pressure, humid, lamda, dcos, hosei = 'hosei_230.txt', off_x = 0, off_y = 0):
-		self.antenna.thread_start('GALACTIC', 0, gx, gy, 0, 0, 0, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y)
-		return
-	
-	def move_planet(self, ntarg, code_mode, temp, pressure, humid, lamda, dcos, hosei, off_x, off_y):
-		self.antenna.thread_start('PLANET', ntarg, 0, 0, 0, 0, 0, temp, pressure, humid, dcos, hosei, off_x, off_y)
-		return
-	
-	def move_stop(self):
-		self.antenna.tracking_end()
-		return
-	
-	def otf_start(self, x, y, dcos, coord_sys, dx, dy, dt, n, rampt, delay, lamda, temp = 0, pressure = 0, humid = 0, hosei = 'hosei_230.txt', code_mode = 'J2000'):
-		self.antenna.otf_start(x, y, dcos, coord_sys, dx, dy, dt, n, rampt, delay, lamda, temp, pressure, humid, hosei, code_mode)
-		return
-	
-	def otf_stop(self):
-		self.antenna.otf_stop()
-		return
+    # def insert_status(self):
+        # fm = file_manager.file_manager()
+        # fm.db_insert()
 
-class dome(object):
-	
-	track_flag = 0
-	
-	def __init__(self):
-		host = ''
-		port = 
-		self.dome = telescope.dome.dome_client('',)
-		self.dome.open()
 
-	def dome_track_start(self):
-		self.dome.start_track()
-		self.track_flag = 1
-		return
+class dfs(object):
+    
+    def __init__(self):
+        host_dfs01 = '172.20.0.41'
+        port_dfs01 = 52700
+        host_dfs02 = '172.20.0.43'
+        port_dfs02 = 52701
+        self.dfs01 = telescope_nanten.ac240.ac240(host_dfs01, port_dfs01)
+        self.dfs02 = telescope_nanten.ac240.ac240(host_dfs02, port_dfs02)
+        self.dfs01.open()
+        self.dfs02.open()
+        pass
+    
+    def oneshot_dfs01(self, repeat=1, integsec=1.0, starttime=0.0):
+        self.dfs01.getspectrum(repeat, integsec, starttime)
+        data = self.dfs01.getdata()
+        return data
+    
+    def oneshot_dfs02(self, repeat=1, integsec=1.0, starttime=0.0):
+        self.dfs02.getspectrum(repeat, integsec, starttime)
+        data = self.dfs02.getdata()
+        return data
 
-	def dome_track_end(self):
-		self.dome.end_track()
-		self.track_flag = 0
-		return
 
-	def dome_move_org(self):
-		if track_flag == 1:
-			self.dome_track_end()
-		self.dome.move_org()
-		return
+class read_status(object):
+    
+    def __init__(self):
+        """
+        opt_host = '172.20.0.12'
+        l_m_port = 6002
+        m4_m_port = 6004
+        self.l_m = telescope_nanten.abs.abs_monitor_client(opt_host, l_m_port)
+        self.m4_m = telescope_nanten.m4.m4_monitor_client(opt_host, m4_m_port)        
+        self.weather = pymeasure.weather.weather_controller()
+        """
+        ctrl_host = '172.20.0.11'
+        enc_port = 8002
+        antenna_port = 8004
+        self.enc = telescope_nanten.antenna_enc.enc_monitor_client(ctrl_host, enc_port)
+        self.antenna = telescope_nanten.antenna_nanten_controller.antenna_monitor_client(ctrl_host, antenna_port)
+        pass
+    """
+    def get_beam(self):
+        load_status = self.l_m.read_pos()
+        m4_status = self.m4_m.read_pos()
+        return [load_status, m4_status]
+    
+    def get_weather(self):
+        ret = self.weather.get_weather()
+        return ret
+    """
 
-	def dome_move(self, az):
-		if track_flag == 1:
-			self.dome_track_end()
-		self.dome.move(az)
-		return
+    def get_antenna(self):
+        enc = self.enc.read_azel()
+        target = self.antenna.read_targetazel()
+        return [enc[0], enc[1], target[0], target[1]]
 
-	def emergency_stop(self):
-		if track_flag == 1:
-			self.dome_track_end()
-		self.dome.emergency_stop()
-		return
 
-class membrane(object):
-	
-	def __init__(self):
-		host = ''
-		port = 
-		self.memb = telescope.mambrane.memb_client('',)
-		self.memb.open()
-	
-	def memb_open(self):
-		self.memb.start_thread('OPEN')
-		return
-	
-	def memb_close(self): # move_org() = memb_close()
-		self.memb.start_thread('CLOSE')
-		return
-	
-	def get_status(self):
-		ret = self.memb.get_status()
-		return ret
-	
 
