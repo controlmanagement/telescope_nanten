@@ -17,7 +17,7 @@
 
 import telescope_nanten.abs
 import telescope_nanten.m4
-#import telescope_nanten.ac240
+import telescope_nanten.ac240
 import telescope_nanten.antenna_nanten_controller
 #import pymeasure.weather
 
@@ -143,11 +143,15 @@ class read_status(object):
         ret = self.weather.get_weather()
         return ret
     """
-
+    
     def get_antenna(self):
         enc = self.enc.read_azel()
         target = self.antenna.read_targetazel()
+        #track = self.antenna.read_track()
+        #error = self.antenna.read_error()
+        #velocity = self.antenna.read_v()
+        #return [enc[0], enc[1], target[0], target[1], track[0], track[1], error[0], error[1], error[2], error[3], velocity[0], velocity[1]]
         return [enc[0], enc[1], target[0], target[1]]
-
+    
 
 
