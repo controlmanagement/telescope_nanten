@@ -14,9 +14,9 @@
 ------------------------------------------------
 """
 
-#import telescope_nanten.abs
-#import telescope_nanten.m4
-#import telescope_nanten.ac240
+import telescope_nanten.abs
+import telescope_nanten.m4
+import telescope_nanten.ac240
 import telescope_nanten.antenna_nanten_controller
 import telescope_nanten.antenna_enc
 import telescope_nanten.dome
@@ -107,13 +107,12 @@ class dfs(object):
 class read_status(object):
     
     def __init__(self):
-        """
+        
         opt_host = '172.20.0.12'
         l_m_port = 6002
         m4_m_port = 6004
         self.l_m = telescope_nanten.abs.abs_monitor_client(opt_host, l_m_port)
         self.m4_m = telescope_nanten.m4.m4_monitor_client(opt_host, m4_m_port)        
-        """
         
         ctrl_host = '172.20.0.11'
         enc_port = 8002
@@ -126,12 +125,12 @@ class read_status(object):
         self.dome = telescope_nanten.dome.dome_monitor_client(ctrl_host, dome_port)
         self.weather = pymeasure.weather.weather_monitor_client(ctrl_host, weather_port)
         pass
-    """
+    
     def read_beam(self):
         load_status = self.l_m.read_pos()
         m4_status = self.m4_m.read_pos()
         return [load_status, m4_status]
-    """
+    
     def read_weather(self):
         ret = self.weather.read_weather()
         return ret
