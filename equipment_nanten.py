@@ -184,7 +184,8 @@ class read_status(object):
             #print 'servo pack error el\n'
         #if telstatus[24] == 0:
             #limit += 'emergency switch'
-
+        if limit == '':
+            limit += 'OFF'
         #track = self.antenna.read_track()
         #error = self.antenna.read_error()
         #velocity = self.antenna.read_v()
