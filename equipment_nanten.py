@@ -170,10 +170,10 @@ class read_status(object):
             limit += '2nd limit up-'
         if telstatus[15] == 0:
             limit += '2nd limit down-'
-        if telstatus[18] == 1:
-            limit += 'deviation error az-'
-        if telstatus[19] == 1:
-            limit += 'deviation error el-'
+        #if telstatus[18] == 1:
+            #limit += 'deviation error az-'
+        #if telstatus[19] == 1:
+            #limit += 'deviation error el-'
         if telstatus[20] == 1:
             limit += 'controller error az-'
         if telstatus[21] == 1:
@@ -186,6 +186,7 @@ class read_status(object):
             #limit += 'emergency switch'
         if limit == '':
             limit += 'OFF'
+        
         #track = self.antenna.read_track()
         #error = self.antenna.read_error()
         #velocity = self.antenna.read_v()
