@@ -40,10 +40,11 @@ class condition_nanten(core.controller.condition):
                    "WindSp" : ret[11],
                    "Press" : ret[12],
                    "Rain" : ret[13],
-                   "CabinTemp[1,2]" : [ret[14],ret[15]],
-                   "DomeTemp[1,2]" : [ret[16],ret[17]],
-                   "GenTemp[1,2]" : [ret[18],ret[19]]
+                   "CabinTemp1" : ret[14],
+                   "CabinTemp2" :ret[15],
+                   "DomeTemp1" : ret[16],
+                   "DomeTemp2" : ret[17],
+                   "GenTemp1" : ret[18],
+                   "GenTemp2" : ret[19],
                    }
         return weather
-
-
