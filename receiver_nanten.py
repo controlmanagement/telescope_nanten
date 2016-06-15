@@ -40,3 +40,8 @@ class receiver_nanten(core.controller.receiver):
         data = self.dfs.oneshot_dfs02(repeat, integsec, starttime)
         return data
     
+    def oneshot_dfs(self, repeat=1, integsec=1.0, starttime=0.0):
+        data = self.dfs.oneshot(repeat, integsec, starttime)
+        return data
+    
+        
