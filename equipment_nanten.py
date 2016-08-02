@@ -155,8 +155,10 @@ class read_status(object):
         opt_host = '172.20.0.12'
         l_m_port = 6002
         m4_m_port = 6004
+        m2_m_port = 9998
         self.l_m = telescope_nanten.abs.abs_monitor_client(opt_host, l_m_port)
         self.m4_m = telescope_nanten.m4.m4_monitor_client(opt_host, m4_m_port)
+        self.m2_m = telescope_nanten.m2.m2_monitor_client(opt_host, m2_m_port)
         
         ctrl_host = '172.20.0.11'
         enc_port = 8002
