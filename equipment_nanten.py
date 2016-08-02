@@ -16,6 +16,7 @@
 
 import telescope_nanten.abs
 import telescope_nanten.m4
+import telescope_nanten.m2
 import telescope_nanten.ac240
 import telescope_nanten.antenna_nanten_controller
 import telescope_nanten.antenna_enc
