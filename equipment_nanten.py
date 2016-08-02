@@ -173,7 +173,8 @@ class read_status(object):
     def read_beam(self):
         load_status = self.l_m.read_pos()
         m4_status = self.m4_m.read_pos()
-        return [load_status, m4_status]
+        m2_status = self.m2_m.read_pos()
+        return [load_status, m4_status, m2_status]
     
     def read_weather(self):
         ret = self.weather.read_weather()
