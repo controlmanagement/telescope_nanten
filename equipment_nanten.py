@@ -106,6 +106,22 @@ class m4(object):
         # fm = file_manager.file_manager()
         # fm.db_insert()
 
+class m2(object):
+    
+    def __init__(self):
+        host = '172.20.0.12'
+        port = 9999
+        self.m2 = telescope_nanten.m2.m2_client(host, port)
+        pass
+    
+    def m2_move(self, dist):
+        self.m2.move(dist)
+        return
+
+
+    def get_status(self):
+        ret = self.m2.get_pos()
+        return ret
 
 class dfs(object):
     
